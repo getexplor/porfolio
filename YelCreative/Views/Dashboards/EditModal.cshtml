@@ -1,0 +1,59 @@
+﻿@model YelCreative.Models.DashboardsViewModel
+
+<div class="modal fade" id="RoleEditModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Update Position of Team</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="FormEditPosition">
+                <div class="modal-body" id="RoleModalBody">
+                    <div class="form-group row">
+                        <label class="col-sm-4 col-form-label">Position Name</label>
+                        <div class="col-sm-8">
+                            @Html.HiddenFor(m => m.Id_Role, new { @id="CurrentIdRole"})
+                            @Html.TextBoxFor(model => model.Role_Name, new { @class = "form-control mt-2", @id="CurrentRole" })
+                            @Html.ValidationMessageFor(model => model.Role_Name, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary" id="btnEditRole">Save changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="CategEditModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Update Category of Portofolio</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="FormEditCateg">
+                <div class="modal-body" id="CategModalBody">
+                    <div class="form-group row">
+                        <label class="col-sm-4 col-form-label">Category Name</label>
+                        <div class="col-sm-8">
+                            @Html.HiddenFor(m => m.Id_Category, new { @id = "CurrentIdCategory" })
+                            @Html.TextBoxFor(model => model.Category_Name, new { @class = "form-control mt-2", @id = "CurrentCateg" })
+                            @Html.ValidationMessageFor(model => model.Category_Name, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary" id="btnEditCateg">Save changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

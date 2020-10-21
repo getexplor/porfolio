@@ -1,0 +1,140 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="YelCreativeModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="AboutU">
+    <Key>
+      <PropertyRef Name="Id_About" />
+    </Key>
+    <Property Name="Id_About" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Content_About" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Update_Date" Type="DateTime" Precision="0" />
+    <Property Name="Current_Position" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Birthday" Type="DateTime" Precision="0" />
+    <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Age" Type="Int32" />
+    <Property Name="Degree" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="Category">
+    <Key>
+      <PropertyRef Name="Id_Category" />
+    </Key>
+    <Property Name="Id_Category" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Category_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Portofolios" Relationship="YelCreativeModel.FK_Portofolio_Category" FromRole="Category" ToRole="Portofolio" />
+  </EntityType>
+  <EntityType Name="ContactU">
+    <Key>
+      <PropertyRef Name="Id_Contact" />
+    </Key>
+    <Property Name="Id_Contact" Type="Int32" Nullable="false" />
+    <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Instagram" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Twitter" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Facebook" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Linkin" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="Role">
+    <Key>
+      <PropertyRef Name="Id_Role" />
+    </Key>
+    <Property Name="Id_Role" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Role_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Users" Relationship="Self.FK_Users_Role" FromRole="Role" ToRole="Users" />
+  </EntityType>
+  <EntityType Name="Service">
+    <Key>
+      <PropertyRef Name="Id_Service" />
+    </Key>
+    <Property Name="Id_Service" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Service_Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Content_Service" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="Id_User" />
+    </Key>
+    <Property Name="Id_User" Type="Int32" Nullable="false" />
+    <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Picture" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="Full_Name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="Id_Role" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <NavigationProperty Name="Role" Relationship="Self.FK_Users_Role" FromRole="Users" ToRole="Role" />
+    <Property Name="Image_Path" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Image_Byte" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <Association Name="FK_Users_Role">
+    <End Role="Role" Type="Self.Role" Multiplicity="1" />
+    <End Role="Users" Type="Self.User" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Role">
+        <PropertyRef Name="Id_Role" />
+      </Principal>
+      <Dependent Role="Users">
+        <PropertyRef Name="Id_Role" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="YelCreativeEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="AboutUs" EntityType="Self.AboutU" />
+    <EntitySet Name="Categories" EntityType="Self.Category" />
+    <EntitySet Name="ContactUs" EntityType="Self.ContactU" />
+    <EntitySet Name="Roles" EntityType="Self.Role" />
+    <EntitySet Name="Services" EntityType="Self.Service" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+    <EntitySet Name="Users" EntityType="Self.User" />
+    <AssociationSet Name="FK_Users_Role" Association="Self.FK_Users_Role">
+      <End Role="Role" EntitySet="Roles" />
+      <End Role="Users" EntitySet="Users" />
+    </AssociationSet>
+    <EntitySet Name="Portofolios" EntityType="YelCreativeModel.Portofolio" />
+    <AssociationSet Name="FK_Portofolio_Category" Association="YelCreativeModel.FK_Portofolio_Category">
+      <End Role="Category" EntitySet="Categories" />
+      <End Role="Portofolio" EntitySet="Portofolios" />
+    </AssociationSet>
+    <EntitySet Name="Skills" EntityType="YelCreativeModel.Skill" />
+  </EntityContainer>
+  <EntityType Name="Portofolio">
+    <Key>
+      <PropertyRef Name="Id_Portofolio" />
+    </Key>
+    <Property Name="Id_Portofolio" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Title" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="Category" Type="Int32" Nullable="false" />
+    <Property Name="ImageTitle" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="ImageByte" Type="Binary" MaxLength="Max" FixedLength="false" />
+    <Property Name="ImagePath" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Category1" Relationship="YelCreativeModel.FK_Portofolio_Category" FromRole="Portofolio" ToRole="Category" />
+  </EntityType>
+  <Association Name="FK_Portofolio_Category">
+    <End Type="YelCreativeModel.Category" Role="Category" Multiplicity="1" />
+    <End Type="YelCreativeModel.Portofolio" Role="Portofolio" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Category">
+        <PropertyRef Name="Id_Category" />
+      </Principal>
+      <Dependent Role="Portofolio">
+        <PropertyRef Name="Category" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Skill">
+    <Key>
+      <PropertyRef Name="Id_Skill" />
+    </Key>
+    <Property Name="Id_Skill" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Skill_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Skill_Value" Type="Int32" />
+  </EntityType>
+</Schema>

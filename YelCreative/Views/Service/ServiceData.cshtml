@@ -1,0 +1,43 @@
+﻿@model YelCreative.Models.ServiceViewModel
+
+<!-- Start Card -->
+<div class="row">
+    @if (ViewBag.ServiceList != null)
+    {
+        foreach (var item in ViewBag.ServiceList)
+        {
+            <div class="col-lg-3 pt-3">
+                <div class="card">
+                    <div class="card-body">
+                        <input type="hidden" id="HiddenId" />
+                        <h5 class="card-title">@item.Service_Name</h5>
+                        <p class="card-text">@item.Content_Service</p>
+                        <div class="float-right">
+                            <button 
+                                    id="btnEdit"
+                                    data-toggle="modal"
+                                    data-target="#ModalEditService"
+                                    data-id="@item.Id_Service"
+                                    data-name="@item.Service_Name"
+                                    data-content="@item.Content_Service"
+                                    type="button"
+                                    title="Edit"
+                                    class="btn btn-warning">
+                                <i class="fa fa-edit"></i>
+                            </button>
+                            <button type="button"
+                                    onclick="DeleteService(@item.Id_Service)"
+                                    data-toggle="modal"
+                                    data-target="#ModalDelete"
+                                    id="btnDelete"
+                                    class="btn btn-danger">
+                                <i class="fa fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+</div>
+<!-- End Card -->

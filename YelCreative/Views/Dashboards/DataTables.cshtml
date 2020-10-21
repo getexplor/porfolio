@@ -1,0 +1,76 @@
+﻿@model YelCreative.Models.DashboardsViewModel 
+<!-- start table of role -->
+<!-- Data Tables Role Team -->
+<div class="row">
+    <!-- Data Table Category -->
+    <div class="col-lg-12">
+        <div class="ibox ">
+            <div class="ibox-title">
+                <h5>Data Category</h5>
+            </div>
+            <div class="ibox-content">
+                <form id="FormCateg">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group  row">
+                                <label class="col-sm-2 col-form-label">Category Name</label>
+                                <div class="col-sm-10">
+                                    @Html.TextBoxFor(model => model.Category_Name, new { @class = "form-control mt-2" })
+                                    @Html.ValidationMessageFor(model => model.Category_Name, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="float-right">
+                                <button class="btn btn-primary" id="btnAddCateg">Add New Category</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <div class="hr-line-dashed"></div>
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered table-hover CategoryData-tables">
+                        <thead class="text-center">
+                            <tr>
+                                <th>No</th>
+                                <th>Category Portofolio</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-center">
+                            @if (ViewBag.CategoryList != null)
+                            {
+                                var count = 0;
+                                foreach (var item in ViewBag.CategoryList)
+                                {
+                                    count = count + 1;
+                                    <tr>
+                                        @Html.HiddenFor(m => m.Id_Category)
+                                        <td>@count</td>
+                                        <td>@item.Category_Name</td>
+                                        <td>
+                                            <button class="btn btn-warning" data-id="@item.Id_Category" data-name="@item.Category_Name" title="Edit" data-toggle="modal" data-target="#CategEditModal">
+                                                <i class="fa fa-edit"></i>
+                                            </button>
+                                            <button class="btn btn-danger" onclick="DeleteCateg(@item.Id_Category)" title="Delete">
+                                                <i class="fa fa-trash"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                        <tfoot class="text-center">
+                            <tr>
+                                <th>No</th>
+                                <th>Category Portofolio</th>
+                                <th>Action</th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end table of role -->

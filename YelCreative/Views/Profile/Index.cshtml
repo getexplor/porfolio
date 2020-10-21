@@ -1,0 +1,98 @@
+﻿@model YelCreative.Models.ProfileViewModel
+
+@{
+    ViewBag.Title = "Profile";
+    
+}
+
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10">
+        <h2>Profile</h2>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="/Dashboards">Dashboard</a>
+            </li>
+            <li class="breadcrumb-item active">
+                <strong>Profile</strong>
+            </li>
+        </ol>
+    </div>
+</div>
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row ">
+        @Html.Partial("CardProfile")
+        @Html.Partial("CardUpdateProfile")
+    </div>
+</div>
+
+<script src="~/Scripts/jquery-3.5.1.min.js"></script>
+<script src="~/Scripts/bootstrap.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+
+@section Scripts{
+    <script type="text/javascript">
+        if (location.href.includes('?')) {
+            history.pushState({}, null, location.href.split('?')[0]);
+        }
+
+        //file name upload
+        $('.custom-file-input').on('change', function () {
+            let fileName = $(this).val().split('\\').pop();
+            $(this).next('.custom-file-label').addClass("selected").html(fileName);
+
+        });
+
+        //update profile data
+        $(document).ready(function () {
+            $("#btnUpdateProfile").click(function () {
+                var data = $("#FormProfile").serialize();
+
+                if(!$("#FormProfile").valid()) {
+                    return false;
+                }
+
+                $.ajax({
+                    type: "POST",
+                    url: "/Profile/UpdateProfile",
+                    data: data,
+                    success: function (response) {
+                        if(response == true){
+                            window.location.href = "/Profile/Index"
+                        }
+                    }
+                });
+
+            })
+        })
+
+        //update picture user
+        $(document).ready(function () {
+            $("#btnUpdateImage").click(function () {
+
+                var CekValid = $("#FormImage").serialize();
+
+                if (!$("#FormImage").valid()) {
+                    return false
+                }
+
+                var file = $("#ImageUpload").get(0).files;
+                var Id_User = $("#CurrentIdUser").val();
+
+                var data = new FormData;
+                data.append("ImageUpload", file[0]);
+                data.append("Id_User", Id_User);
+                console.log(data);
+
+                $.ajax({
+                    type: "POST",
+                    url: "/Profile/UpdatePicture",
+                    data: data,
+                    contentType: false,
+                    processData: false,
+                });
+            });
+        });
+
+    </script>
+}

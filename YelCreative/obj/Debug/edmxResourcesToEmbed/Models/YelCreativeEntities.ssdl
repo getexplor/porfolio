@@ -1,0 +1,120 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="YelCreativeModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="AboutUs">
+    <Key>
+      <PropertyRef Name="Id_About" />
+    </Key>
+    <Property Name="Id_About" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Content_About" Type="nvarchar(max)" />
+    <Property Name="Update_Date" Type="date" />
+    <Property Name="Current_Position" Type="nvarchar(max)" />
+    <Property Name="Birthday" Type="date" />
+    <Property Name="City" Type="varchar" MaxLength="50" />
+    <Property Name="Age" Type="int" />
+    <Property Name="Degree" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Category">
+    <Key>
+      <PropertyRef Name="Id_Category" />
+    </Key>
+    <Property Name="Id_Category" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Category_Name" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="ContactUs">
+    <Key>
+      <PropertyRef Name="Id_Contact" />
+    </Key>
+    <Property Name="Id_Contact" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Address" Type="nvarchar(max)" />
+    <Property Name="Phone" Type="varchar" MaxLength="50" />
+    <Property Name="Email" Type="varchar" MaxLength="50" />
+    <Property Name="Instagram" Type="varchar" MaxLength="50" />
+    <Property Name="Twitter" Type="varchar" MaxLength="50" />
+    <Property Name="Facebook" Type="varchar" MaxLength="50" />
+    <Property Name="Linkin" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Portofolio">
+    <Key>
+      <PropertyRef Name="Id_Portofolio" />
+    </Key>
+    <Property Name="Id_Portofolio" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Title" Type="varchar" MaxLength="255" />
+    <Property Name="Category" Type="int" Nullable="false" />
+    <Property Name="ImageTitle" Type="varchar" MaxLength="255" />
+    <Property Name="ImageByte" Type="image" />
+    <Property Name="ImagePath" Type="varchar" MaxLength="255" />
+  </EntityType>
+  <EntityType Name="Role">
+    <Key>
+      <PropertyRef Name="Id_Role" />
+    </Key>
+    <Property Name="Id_Role" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Role_Name" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Services">
+    <Key>
+      <PropertyRef Name="Id_Service" />
+    </Key>
+    <Property Name="Id_Service" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Service_Name" Type="nvarchar(max)" />
+    <Property Name="Content_Service" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="Skills">
+    <Key>
+      <PropertyRef Name="Id_Skill" />
+    </Key>
+    <Property Name="Id_Skill" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Skill_Name" Type="varchar" MaxLength="50" />
+    <Property Name="Skill_Value" Type="int" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="Id_User" />
+    </Key>
+    <Property Name="Id_User" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Email" Type="varchar" MaxLength="50" />
+    <Property Name="password" Type="varchar" MaxLength="50" />
+    <Property Name="Full_Name" Type="varchar" MaxLength="255" />
+    <Property Name="Id_Role" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="Picture" Type="varchar" MaxLength="255" />
+    <Property Name="Image_Path" Type="varchar" MaxLength="50" />
+    <Property Name="Image_Byte" Type="image" />
+  </EntityType>
+  <Association Name="FK_Portofolio_Category">
+    <End Role="Category" Type="Self.Category" Multiplicity="1" />
+    <End Role="Portofolio" Type="Self.Portofolio" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Category">
+        <PropertyRef Name="Id_Category" />
+      </Principal>
+      <Dependent Role="Portofolio">
+        <PropertyRef Name="Category" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="YelCreativeModelStoreContainer">
+    <EntitySet Name="AboutUs" EntityType="Self.AboutUs" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ContactUs" EntityType="Self.ContactUs" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Portofolio" EntityType="Self.Portofolio" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Services" EntityType="Self.Services" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Skills" EntityType="Self.Skills" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Portofolio_Category" Association="Self.FK_Portofolio_Category">
+      <End Role="Category" EntitySet="Category" />
+      <End Role="Portofolio" EntitySet="Portofolio" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

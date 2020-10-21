@@ -1,0 +1,41 @@
+﻿@model YelCreative.Models.UserViewModel
+
+
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_Login.cshtml";
+}
+
+<div class="middle-box text-center loginscreen animated fadeInDown">
+    <div>
+        <div>
+
+            <h1 class="logo-name">Adit</h1>
+
+        </div>
+        <h3>Welcome to Aditia IRFN</h3>
+        <p>
+            Admin Dashboard
+            <!--Continually expanded and constantly improved Inspinia Admin Them (IN+)-->
+        </p>
+        <p>Login in. To see it in action.</p>
+        <form id="FormLogin">
+            <div class="form-group">
+                @Html.TextBoxFor(model => model.Email, new { @class = "form-control", @type = "Email", @placeholder = "Email" })
+                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                @Html.TextBoxFor(model => model.password, new { @class = "form-control", @type = "password", @placeholder = "Passwords" })
+                @Html.ValidationMessageFor(model => model.password, "", new { @class = "text-danger" })
+            </div>
+        </form>
+        
+        <button class="btn btn-primary block full-width m-b" id="btnLogin" onclick="Login()">Login</button>
+        <div class="alert alert-danger" id="alertFailed" role="alert">
+            Check your email and password
+        </div>
+        
+        <p class="m-t"> <small>YelCreative all right reserved &copy; 2020</small> </p>
+    </div>
+</div>
+

@@ -1,0 +1,268 @@
+﻿@{
+    ViewBag.Title = "Dashboard";
+    ViewBag.DashboardActive = "active";
+}
+
+@section Styles{
+    <!-- Data Table -->
+    <link href="~/Content/plugins/dataTables/datatables.min.css" rel="stylesheet">
+
+    <!-- Toastr style -->
+    <link href="~/Content/plugins/toastr/toastr.min.css" rel="stylesheet">
+
+    <!-- Gritter -->
+    <link href="~/Scripts/plugins/gritter/jquery.gritter.css" rel="stylesheet">
+}
+
+<div class="wrapper wrapper-content pt-1 animated fadeInRight">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox ">
+                @Html.Partial("CardsTop")
+                @Html.Partial("DataTables")
+                @Html.Partial("EditModal")
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <!-- Data Tables -->
+    <script src="~/Scripts/plugins/dataTables/datatables.min.js"></script>
+    <script src="~/Scripts/plugins/dataTables/dataTables.bootstrap4.min.js"></script>
+
+    <!-- GITTER -->
+    <script src="~/Scripts/plugins/gritter/jquery.gritter.min.js"></script>
+
+    <!-- Sparkline -->
+    <script src="~/Scripts/plugins/sparkline/jquery.sparkline.min.js"></script>
+
+    <!-- Sparkline demo data  -->
+    <script src="~/Scripts/demo/sparkline-demo.js"></script>
+
+    <!-- ChartJS-->
+    <script src="~/Scripts/plugins/chartJs/Chart.min.js"></script>
+
+    <!-- Toastr -->
+    <script src="~/Scripts/plugins/toastr/toastr.min.js"></script>
+
+
+    <script type="text/javascript">
+        if (location.href.includes('?')) {
+            history.pushState({}, null, location.href.split('?')[0]);
+        }
+
+        //toastr
+        $(document).ready(function () {
+            setTimeout(function () {
+                toastr.options = {
+                    closeButton: true,
+                    progressBar: true,
+                    showMethod: 'slideDown',
+                    timeOut: 4000
+                };
+                toastr.success('make your happines', 'Welcome to YelCreative');
+
+            }, 1300);
+        });
+
+        //------------------------------------//
+        //role data tables
+        $(document).ready(function () {
+            $('.RoleData-tables').DataTable({
+                pageLength: 5,
+                responsive: true,
+                dom: '<"html5buttons"B>lTfgitp',
+                buttons: [
+                    { extend: 'copy' },
+                    { extend: 'csv' },
+                    { extend: 'excel', title: 'ExampleFile' },
+                    { extend: 'pdf', title: 'ExampleFile' },
+
+                    {
+                        extend: 'print',
+                        customize: function (win) {
+                            $(win.document.body).addClass('white-bg');
+                            $(win.document.body).css('font-size', '10px');
+
+                            $(win.document.body).find('table')
+                                    .addClass('compact')
+                                    .css('font-size', 'inherit');
+                        }
+                    }
+                ]
+
+            });
+
+        });
+
+        //category data tables
+        $(document).ready(function () {
+            $('.CategoryData-tables').DataTable({
+                pageLength: 5,
+                responsive: true,
+                dom: '<"html5buttons"B>lTfgitp',
+                buttons: [
+                    { extend: 'copy' },
+                    { extend: 'csv' },
+                    { extend: 'excel', title: 'ExampleFile' },
+                    { extend: 'pdf', title: 'ExampleFile' },
+
+                    {
+                        extend: 'print',
+                        customize: function (win) {
+                            $(win.document.body).addClass('white-bg');
+                            $(win.document.body).css('font-size', '10px');
+
+                            $(win.document.body).find('table')
+                                    .addClass('compact')
+                                    .css('font-size', 'inherit');
+                        }
+                    }
+                ]
+
+            });
+
+        });
+
+        //------------------------------------//
+        //add new role
+        $(document).ready(function () {
+            $("#btnAddRole").click(function () {
+                var data = $("#FormPosition").serialize();
+
+                if (!$("#FormPosition").valid()) {
+                    return false;
+                }
+                $.ajax({
+                    type: "POST",
+                    url: "/Dashboards/AddRole",
+                    data: data,
+                    success: function (response) {
+                        if(response == true){
+                            windows.location.href = "/Dashboards/Index";
+                        }
+                    }
+                });
+            });
+        });
+
+        //edit role name
+        $("#RoleEditModal").on("show.bs.modal", function (event) {
+            var button = $(event.relatedTarget) 
+            var idRole = button.data("id") 
+            var CurrentName = button.data("name")
+            $("#CurrentIdRole").val(idRole); 
+            $("#CurrentRole").val(CurrentName); 
+
+        });
+
+        $(document).ready(function () {
+            $("#btnEditRole").click(function () {
+                var data = $("#FormEditPosition").serialize();
+
+                if (!$("#FormEditPosition").valid()) {
+                    return false
+                }
+                $.ajax({
+                    type: "POST",
+                    url: "/Dashboards/EditRole",
+                    data: data,
+                    success: function (response) {
+                        if (response == true) {
+                            window.location.href = "/Dashboards/Index";
+                        }
+                    }
+                });
+            });
+        });
+
+        //delete role
+        var DeleteRole = function (idRole) {
+            var Id_Role = idRole;
+
+            $.ajax({
+                type: "POST",
+                url: "/Dashboards/DeleteRole?Id_Role=" + Id_Role,
+                success: function (response) {
+                    if (response == true) {
+                        window.location.href = "/Dashboards/Index"
+                    }
+                }
+            });
+        }
+
+        //------------------------------------//
+
+        //add new category
+        $(document).ready(function () {
+            $("#btnAddCateg").click(function () {
+                var data = $("#FormCateg").serialize();
+
+                if (!$("#FormCateg").valid()) {
+                    return false;
+                }
+
+                $.ajax({
+                    type: "POST",
+                    url: "/Dashboards/AddCateg",
+                    data: data,
+                    success: function (response) {
+                        if(response == true){
+                            window.location.href = "/Dashboards/Index";
+                        }
+                    }
+                });
+            });
+        });
+
+        //edit category name
+        $("#CategEditModal").on("show.bs.modal", function (event) {
+            var button = $(event.relatedTarget) 
+            var idCateg = button.data("id") 
+            var CurrentCateg = button.data("name")
+            $("#CurrentIdCategory").val(idCateg); 
+            $("#CurrentCateg").val(CurrentCateg); 
+
+        });
+
+        $(document).ready(function () {
+            $("#btnEditCateg").click(function () {
+                var data = $("#FormEditCateg").serialize();
+
+                if (!$("#FormEditCateg").valid()) {
+                    return false
+                }
+                $.ajax({
+                    type: "POST",
+                    url: "/Dashboards/EditCateg",
+                    data: data,
+                    success: function (response) {
+                        if (response == true) {
+                            window.location.href = "/Dashboards/Index";
+                        }
+                    }
+                });
+            });
+        });
+
+        //delete category
+        var DeleteCateg = function (idCateg) {
+            var Id_Category = idCateg;
+
+            $.ajax({
+                type: "POST",
+                url: "/Dashboards/DeleteCateg?Id_Category=" + Id_Category,
+                success: function (response) {
+                    if (response == true) {
+                        window.location.href = "/Dashboards/Index"
+                    }
+                    else {
+                        toastr.error('Cannot Delete Category, you must delete portofolio first');
+                    }
+                }
+            });
+        }
+
+    </script>
+}
