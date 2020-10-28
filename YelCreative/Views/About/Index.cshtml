@@ -83,7 +83,7 @@
                                     <div class="form-group  row">
                                         <label class="col-sm-2 col-form-label">BirthDay</label>
                                         <div class="col-sm-10">
-                                            @Html.TextBoxFor(model => model.Birthday, new { @Value= Model.Birthday.ToString() ,@class = "form-control mt-2", @placeholder = "Your BirthDay", @type = "Date" })
+                                            @Html.TextBoxFor(model => model.Birthday, "{0:hh/BB/TTTT}",new { @Value= Model.Birthday.ToString() ,@class = "form-control mt-2", @placeholder = "Your BirthDay", @type = "Date" })
                                             @Html.DisplayFor(model => model.Birthday, "{dd/MM/yyyy}", new { @class = "font-weight-bold" })
                                         </div>
                                     </div>
